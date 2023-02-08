@@ -1,0 +1,111 @@
+%remain-steps {
+  &:before {
+    content: counter(stepNum);
+    font-family: inherit;
+    font-weight: 700;
+  }
+  &:after {
+    background-color: var(--secondary-base-color);
+  }
+}
+
+.ProgressBar {
+  .multi-steps {
+    display: grid;
+    table-layout: fixed;
+    width: 100%;
+
+    > li {
+      counter-increment: stepNum;
+      text-align: center;
+      display: table-cell;
+      position: relative;
+      // color: var(--primary-base-color);
+      padding-left: 0;
+
+      &:before {
+        content: "\2713";
+        position: inherit;
+        display: block;
+        margin: 0 0 4px auto;
+        width: 32px;
+        height: 32px;
+        line-height: 36px;
+        text-align: center;
+        font-weight: bold;
+        padding: 0;
+        color: $white;
+        background-color: var(--primary-base-color);
+        border: {
+          radius: 50%;
+        }
+      }
+
+      &:after {
+        content: "";
+        height: 4px;
+        width: calc(100% - 84px);
+        margin: 0 auto;
+        background-color: var(--primary-base-color);
+        position: absolute;
+        top: 16px;
+        // right: 50%;
+        z-index: -1;
+        border-radius: 2px;
+        left: 40px;
+      }
+
+      &:first-child {
+        &:before {
+          margin: 0 0 4px auto;
+        }
+
+        &:after {
+          width: calc(100% - 42px);
+          left: 0;
+        }
+      }
+
+      &:last-child {
+        &:before {
+          display: none;
+        }
+
+        &:after {
+          width: calc(100% - 40px);
+          right: 0px;
+        }
+      }
+
+      div {
+        position: relative;
+        float: right;
+        strong {
+          text-transform: capitalize;
+          left: 50%;
+        }
+      }
+
+      &.is-active {
+        @extend %remain-steps;
+        &:before {
+          color: $white;
+          background-color: var(--primary-base-color);
+        }
+
+        &:after {
+          background-color: var(--primary-base-color);
+        }
+
+        ~ li {
+          color: var(--secondary-base-color);
+          @extend %remain-steps;
+          &:before {
+            background-color: var(--secondary-base-color);
+            color: var(--secondary-dark-color);
+          }
+        }
+      }
+    }
+  }
+}
